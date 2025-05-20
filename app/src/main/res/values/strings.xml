@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">ToDo</string>
     <string name="add_button">Add Button</string>
-    <string name="delete_all_tasks">Delete All</string>
+    <string name="delete_all_tasks_dropdown_text">Delete All</string>
     <string name="search_action">Search Tasks</string>
     <string name="sort_action">Sort Tasks</string>
-    
+
     <string name="list_screen_title">Tasks</string>
     <string name="more_details">Delete All Tasks</string>
     <string name="search_placeholder">Search</string>
@@ -20,6 +20,22 @@
 
     <string name="delete_action">Delete Task</string>
     <string name="edit_action">Edit Task</string>
+    <string name="drop_down_icon">Expand Drop Down Icon</string>
+
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+
+    <string name="confirm_button">Yes</string>
+    <string name="cancel_button">Cancel</string>
+
+    <string name="delete_task">Remove \'%1$s\' ?</string>
+    <string name="delete_task_confirmation">Are you sure you want to remove \'%1$s\' ?</string>
+
+    <string name="delete_all_tasks">Remove All Tasks ?</string>
+    <string name="delete_all_tasks_confirmation">
+        Are you sure you want to remove all Tasks ?
+        There is no going back after this action
+    </string>
 
 
 </resources>

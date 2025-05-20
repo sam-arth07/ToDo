@@ -29,52 +29,70 @@ import com.example.todo.ui.theme.PRIORITY_INDICATOR_SIZE
 import com.example.todo.ui.theme.TASK_ITEM_ELEVATION
 import com.example.todo.ui.theme.taskItemTextColor
 import com.example.todo.util.RequestState
+import com.example.todo.util.SearchAppBarState
 
 @Composable
 fun ListContent(
     paddingValues: PaddingValues,
-    tasks: RequestState<List<ToDoTask>>,
+    allTasks: RequestState<List<ToDoTask>>,
+    searchedTasks: RequestState<List<ToDoTask>>,
+    searchAppBarState: SearchAppBarState,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (tasks is RequestState.Success) {
-        if (tasks.data.isNotEmpty()) {
-            LazyColumn(
-                modifier =
-                    Modifier.padding(top = paddingValues.calculateTopPadding())
-            ) {
-                items(
-                    items = tasks.data,
-                    key = { task -> task.id }
-                ) { task ->
-                    TaskItem(task, navigateToTaskScreen)
-                }
-
-            }
-        } else {
-            EmptyContent()
+    if (searchAppBarState == SearchAppBarState.TRIGGERED) {
+        if (searchedTasks is RequestState.Success) {
+            HandleListContent(
+                tasks = searchedTasks.data,
+                navigateToTaskScreen = navigateToTaskScreen,
+                paddingValues = paddingValues
+            )
         }
     } else {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier =
-                Modifier
+        if (allTasks is RequestState.Success) {
+            HandleListContent(
+                tasks = allTasks.data,
+                navigateToTaskScreen = navigateToTaskScreen,
+                paddingValues = paddingValues
+            )
+        } else {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
                     .padding(top = paddingValues.calculateTopPadding())
                     .fillMaxSize()
-        ) {
-            CircularProgressIndicator()
+            ) {
+                CircularProgressIndicator()
+            }
         }
     }
 }
 
 @Composable
+fun HandleListContent(
+    tasks: List<ToDoTask>, navigateToTaskScreen: (taskId: Int) -> Unit, paddingValues: PaddingValues
+) {
+    if (tasks.isNotEmpty()) {
+        LazyColumn(
+            modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
+        ) {
+            items(
+                items = tasks, key = { task -> task.id }) { task ->
+                TaskItem(task, navigateToTaskScreen)
+            }
+
+        }
+    } else {
+        EmptyContent()
+    }
+}
+
+@Composable
 fun TaskItem(
-    toDoTask: ToDoTask,
-    navigateToTaskScreen: (taskId: Int) -> Unit
+    toDoTask: ToDoTask, navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-//        color = MaterialTheme.colorScheme.taskItemBackgroundColor,
         shape = RectangleShape,
         shadowElevation = TASK_ITEM_ELEVATION,
         onClick = { navigateToTaskScreen(toDoTask.id) }) {

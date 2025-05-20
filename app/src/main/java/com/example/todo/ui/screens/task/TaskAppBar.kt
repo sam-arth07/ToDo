@@ -13,9 +13,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.example.todo.R
+import com.example.todo.components.DisplayAlertDialog
 import com.example.todo.data.models.ToDoTask
 import com.example.todo.util.Action
 
@@ -95,8 +100,7 @@ fun ExistingTaskAppBar(
         }, colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
         ), actions = {
-            DeleteAction(navigateToListScreen)
-            EditAction(navigateToListScreen)
+            ExistingTaskAppBarActions(selectedTask, navigateToListScreen)
         })
 }
 
@@ -112,8 +116,8 @@ fun CloseAction(onCloseClicked: (Action) -> Unit) {
 }
 
 @Composable
-fun DeleteAction(onDeleteClicked: (Action) -> Unit) {
-    IconButton(onClick = { onDeleteClicked(Action.DELETE) }) {
+fun DeleteAction(onDeleteClicked: () -> Unit) {
+    IconButton(onClick = { onDeleteClicked() }) {
         Icon(
             imageVector = Icons.Filled.Delete,
             contentDescription = stringResource(R.string.delete_action),
@@ -131,4 +135,24 @@ fun EditAction(onEditClicked: (Action) -> Unit) {
             tint = MaterialTheme.colorScheme.onPrimary
         )
     }
+}
+
+
+@Composable
+fun ExistingTaskAppBarActions(selectedTask: ToDoTask, navigateToListScreen: (Action) -> Unit) {
+    var openDialog by remember { mutableStateOf(false) }
+
+    DisplayAlertDialog(
+        title = stringResource(R.string.delete_task, selectedTask.title),
+        message = stringResource(R.string.delete_task_confirmation, selectedTask.title),
+        onYesClicked = {
+            navigateToListScreen(Action.DELETE)
+        },
+        closeDialog = { openDialog = false },
+        openDialog = openDialog
+    )
+    DeleteAction(onDeleteClicked = {
+        openDialog = true
+    })
+    EditAction(navigateToListScreen)
 }

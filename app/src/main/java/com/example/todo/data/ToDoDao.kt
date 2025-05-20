@@ -16,8 +16,8 @@ interface ToDoDao {
     @Query("select * from todo_table order by id asc")
     fun getAllTasks(): Flow<List<ToDoTask>>
 
-    @Query("select * from todo_table where id=:taskId")
-    fun getSelectedTask(taskId:Int) : Flow<ToDoTask>
+    @Query("select * from todo_table where id = :taskId")
+    fun getSelectedTask(taskId:Int) : Flow<ToDoTask?>
 
     //POST
     @Insert(onConflict = OnConflictStrategy.IGNORE)

@@ -26,15 +26,20 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ListScreen(
-    navigateToTaskScreen: (taskId: Int) -> Unit, sharedViewModel: SharedViewModel
+    navigateToTaskScreen: (taskId: Int) -> Unit,
+    sharedViewModel: SharedViewModel,
+    action: Action
 ) {
-    LaunchedEffect(key1 = true) {
-        sharedViewModel.getAllTasks()
+    LaunchedEffect(key1 = action) {
+        sharedViewModel.handleDatabaseActions(action)
     }
-    val action by sharedViewModel.action
 
     val allTasks by sharedViewModel.allTasks.collectAsState()
     val searchedTasks by sharedViewModel.searchedTasks.collectAsState()
+
+    val sortState by sharedViewModel.sortState.collectAsState()
+    val lowPriorityTask by sharedViewModel.lowPriorityTask.collectAsState()
+    val highPriorityTask by sharedViewModel.highPriorityTask.collectAsState()
 
     val searchAppBarState: SearchAppBarState by sharedViewModel.searchAppBarState
     val searchTextState: String by sharedViewModel.searchTextState
@@ -45,7 +50,7 @@ fun ListScreen(
     }
     DisplaySnackBar(
         snackBarHost = snackBarHost,
-        handleDatabaseActions = { sharedViewModel.handleDatabaseActions(action) },
+        onComplete = { sharedViewModel.action.value = it },
         taskTitle = sharedViewModel.title.value,
         action = action,
         onUndoClicked = { action ->
@@ -65,7 +70,14 @@ fun ListScreen(
             allTasks = allTasks,
             navigateToTaskScreen = navigateToTaskScreen,
             searchAppBarState = searchAppBarState,
-            searchedTasks = searchedTasks
+            searchedTasks = searchedTasks,
+            lowPriorityTask = lowPriorityTask,
+            highPriorityTask = highPriorityTask,
+            sortState = sortState,
+            onSwipeToDelete = { action, task ->
+                sharedViewModel.action.value = action
+                sharedViewModel.updateTaskFields(selectedTask = task)
+            }
         )
     })
 }
@@ -90,13 +102,11 @@ fun ListFAB(
 @Composable
 fun DisplaySnackBar(
     snackBarHost: SnackbarHostState,
-    handleDatabaseActions: () -> Unit,
+    onComplete: (Action) -> Unit,
     taskTitle: String,
     action: Action,
     onUndoClicked: (Action) -> Unit
 ) {
-    handleDatabaseActions()
-
     val scope = rememberCoroutineScope()
     LaunchedEffect(key1 = action) {
         if (action != Action.NO_ACTION) {
@@ -109,6 +119,7 @@ fun DisplaySnackBar(
                 )
             }
         }
+        onComplete(Action.NO_ACTION)
     }
 }
 

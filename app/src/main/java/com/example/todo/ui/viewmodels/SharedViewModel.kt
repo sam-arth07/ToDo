@@ -41,11 +41,11 @@ class SharedViewModel @Inject constructor(
 
     val searchTextState: MutableState<String> = mutableStateOf("")
 
-    private val _selectedTask = MutableStateFlow<ToDoTask?>(null)
-    val selectedTask: StateFlow<ToDoTask?> = _selectedTask
-
     private val _allTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
     val allTasks: StateFlow<RequestState<List<ToDoTask>>> = _allTasks
+
+    private val _selectedTask = MutableStateFlow<ToDoTask?>(null)
+    val selectedTask: StateFlow<ToDoTask?> = _selectedTask
 
     private val _searchedTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
     val searchedTasks: StateFlow<RequestState<List<ToDoTask>>> = _searchedTasks
@@ -104,17 +104,15 @@ class SharedViewModel @Inject constructor(
         initialValue = emptyList()
     )
 
-
     private fun readSortState() {
         _sortState.value = RequestState.Loading
         try {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 dataStoreRepository.readSortState
                     .map { Priority.valueOf(it) }
                     .collect {
                         _sortState.value = RequestState.Success(it)
                     }
-
             }
         } catch (e: Exception) {
             _sortState.value = RequestState.Error(e)
@@ -171,6 +169,7 @@ class SharedViewModel @Inject constructor(
         when (action) {
             Action.ADD -> {
                 addTask()
+                updateAction(Action.NO_ACTION)
             }
 
             Action.UPDATE -> {
@@ -183,6 +182,7 @@ class SharedViewModel @Inject constructor(
 
             Action.UNDO -> {
                 addTask()
+                updateAction(Action.NO_ACTION)
             }
 
             Action.DELETE_ALL -> {
@@ -211,6 +211,10 @@ class SharedViewModel @Inject constructor(
         if (newTitle.length < MAX_TITLE_LEN) {
             title.value = newTitle
         }
+    }
+
+    fun updateAction(newAction: Action) {
+        action.value = newAction
     }
 
     fun validateFields(): Boolean {

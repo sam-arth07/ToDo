@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.example.todo.navigation.Screen
 import com.example.todo.ui.screens.task.TaskScreen
 import com.example.todo.ui.viewmodels.SharedViewModel
@@ -14,7 +15,7 @@ fun NavGraphBuilder.taskComposable(
     navigateToListScreen: (Action) -> Unit, sharedViewModel: SharedViewModel
 ) {
     composable<Screen.Task> { navBackStackEntry ->
-        val taskId = navBackStackEntry.arguments!!.getInt("id")
+        val taskId = navBackStackEntry.toRoute<Screen.Task>().id
         LaunchedEffect(key1 = taskId) {
             sharedViewModel.getSelectedTask(taskId)
         }

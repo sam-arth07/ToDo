@@ -39,7 +39,6 @@ import com.example.todo.ui.theme.LARGE_PADDING
 import com.example.todo.ui.viewmodels.SharedViewModel
 import com.example.todo.util.Action
 import com.example.todo.util.SearchAppBarState
-import com.example.todo.util.TrailingIconState
 
 @Composable
 fun ListAppBar(
@@ -146,19 +145,13 @@ fun SortAction(
         )
         DropdownMenu(
             expanded = expanded, onDismissRequest = { expanded = false }) {
-            DropdownMenuItem(onClick = {
-                expanded = false
-                onSortClicked(Priority.LOW)
-            }, text = { PriorityItem(priority = Priority.LOW) })
-            DropdownMenuItem(onClick = {
-                expanded = false
-                onSortClicked(Priority.HIGH)
-            }, text = { PriorityItem(priority = Priority.HIGH) })
-            DropdownMenuItem(onClick = {
-                expanded = false
-                onSortClicked(Priority.NONE)
-            }, text = { PriorityItem(priority = Priority.NONE) })
-
+            Priority.entries.toTypedArray().slice(0..3).forEach { priority ->
+                if (priority != Priority.MEDIUM)
+                    DropdownMenuItem(onClick = {
+                        expanded = false
+                        onSortClicked(priority)
+                    }, text = { PriorityItem(priority = priority) })
+            }
         }
     }
 }
@@ -199,7 +192,6 @@ fun SearchAppBar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit
 ) {
-    var trailingIconState by remember { mutableStateOf(TrailingIconState.READY_TO_DELETE) }
     TopAppBar(
         navigationIcon = {
             IconButton(
@@ -213,24 +205,10 @@ fun SearchAppBar(
         },
         actions = {
             IconButton(onClick = {
-                when (trailingIconState) {
-                    TrailingIconState.READY_TO_DELETE -> {
-                        if (text.isNotEmpty()) {
-                            onTextChange("")
-                            trailingIconState = TrailingIconState.READY_TO_CLOSE
-                        } else {
-                            onCloseClicked()
-                        }
-                    }
-
-                    TrailingIconState.READY_TO_CLOSE -> {
-                        if (text.isNotEmpty()) {
-                            onTextChange("")
-                        } else {
-                            onCloseClicked()
-                            trailingIconState = TrailingIconState.READY_TO_DELETE
-                        }
-                    }
+                if (text.isNotEmpty()) {
+                    onTextChange("")
+                } else {
+                    onCloseClicked()
                 }
             }
             ) {

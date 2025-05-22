@@ -155,7 +155,7 @@ fun HandleListContent(
                     val scope = rememberCoroutineScope()
                     SideEffect {
                         scope.launch {
-                            delay(300)
+                            delay(100)
                             onSwipeToDelete(Action.DELETE, task)
                         }
                     }
@@ -168,18 +168,12 @@ fun HandleListContent(
                 LaunchedEffect(key1 = true) {
                     itemAppeared = true
                 }
-                AnimatedVisibility(
-                    visible = itemAppeared,
-                    enter = expandVertically(animationSpec = tween(durationMillis = 300)),
-                    exit = shrinkVertically(animationSpec = tween(durationMillis = 300))
-                ) {
-                    SwipeToDismissBox(
-                        state = dismissState,
-                        enableDismissFromStartToEnd = false,
-                        enableDismissFromEndToStart = true,
-                        backgroundContent = { RedBackground(degrees = degrees) }) {
-                        TaskItem(task, navigateToTaskScreen)
-                    }
+                SwipeToDismissBox(
+                    state = dismissState,
+                    enableDismissFromStartToEnd = false,
+                    enableDismissFromEndToStart = true,
+                    backgroundContent = { RedBackground(degrees = degrees) }) {
+                    TaskItem(task, navigateToTaskScreen)
                 }
             }
         }

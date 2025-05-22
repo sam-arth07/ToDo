@@ -2,6 +2,7 @@ package com.example.todo.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
@@ -22,7 +23,9 @@ val HighPriorityColor = Color(0xFFFF4646)
 val MediumPriorityColor = Color(0xFFFFC114)
 val NonePriorityColor = MediumGray
 
-
+//val ColorScheme.splashScreenBackground: Color
+//    @Composable
+//    get() = if (isSystemInDarkTheme()) Color.Black else MaterialTheme.colorScheme.primary
 
 val ColorScheme.taskItemTextColor: Color
     @Composable

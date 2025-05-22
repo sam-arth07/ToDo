@@ -73,7 +73,7 @@ fun ListScreen(
             highPriorityTask = highPriorityTask,
             sortState = sortState,
             onSwipeToDelete = { action, task ->
-                sharedViewModel.action.value = action
+                sharedViewModel.updateAction(newAction = action)
                 sharedViewModel.updateTaskFields(selectedTask = task)
                 snackBarHost.currentSnackbarData?.dismiss()
             }

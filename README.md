@@ -32,19 +32,14 @@ This application is built using:
 -   **Jetpack Navigation**: Single-activity application navigation
 
 ## 📷 Screenshots
-![WhatsApp Image 2025-05-26 at 15 59 00_62e98171](https://github.com/user-attachments/assets/178b558e-e86b-428f-a153-f1a6df081548)
-![WhatsApp Image 2025-05-26 at 15 59 02_cb14623a](https://github.com/user-attachments/assets/059a49f5-2fc0-4921-a37b-77b9407b8a55)
-![WhatsApp Image 2025-05-26 at 15 59 02_2c8669e8](https://github.com/user-attachments/assets/7ce7f9f2-54d6-4377-9d25-a22a05882556)
-![WhatsApp Image 2025-05-26 at 15 59 01_ddf663c6](https://github.com/user-attachments/assets/249647af-7af7-4f0c-a283-4cc4ef98b205)
-![WhatsApp Image 2025-05-26 at 15 59 01_9f6022d1](https://github.com/user-attachments/assets/47e5ec7c-074a-4c59-b67c-74edb351cb2c)
-![WhatsApp Image 2025-05-26 at 15 59 01_451b949c](https://github.com/user-attachments/assets/a84556cc-9805-412c-bf69-6920cd71be84)
-![WhatsApp Image 2025-05-26 at 15 59 00_406d0cd2](https://github.com/user-attachments/assets/0c5a42b1-c772-4251-a340-f16134e1f05b)
-![WhatsApp Image 2025-05-26 at 15 59 00_fe3fd41f](https://github.com/user-attachments/assets/ee033ba6-f575-4614-a9f5-708f53318631)
-
-
-
-
-[_Note: App screenshots will be added here. This is a placeholder to remind you to add screenshots showing the main app screens: task list view, task detail view, task creation/editing, and other notable features._]
+<img src="https://github.com/user-attachments/assets/dbc00b38-06cb-425b-8717-44e384b79b77" width="200" height="400">
+<img src="https://github.com/user-attachments/assets/059a49f5-2fc0-4921-a37b-77b9407b8a55" width="200" height="400">
+<img src="https://github.com/user-attachments/assets/7ce7f9f2-54d6-4377-9d25-a22a05882556" width="200" height="400">
+<img src="https://github.com/user-attachments/assets/249647af-7af7-4f0c-a283-4cc4ef98b205" width="200" height="400">
+<img src="https://github.com/user-attachments/assets/47e5ec7c-074a-4c59-b67c-74edb351cb2c" width="200" height="400">
+<img src="https://github.com/user-attachments/assets/a84556cc-9805-412c-bf69-6920cd71be84" width="200" height="400">
+<img src="https://github.com/user-attachments/assets/0c5a42b1-c772-4251-a340-f16134e1f05b" width="200" height="400">
+<img src="https://github.com/user-attachments/assets/ee033ba6-f575-4614-a9f5-708f53318631" width="200" height="400">
 
 ## 🚀 Getting Started
 

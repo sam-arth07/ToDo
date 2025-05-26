@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.todo.R
 import com.example.todo.components.PriorityDropDown
 import com.example.todo.data.models.Priority
@@ -40,7 +39,8 @@ fun TaskContent(
             .padding(horizontal = LARGE_PADDING)
     ) {
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             value = title,
             onValueChange = { onTitleChange(it) },
             label = { Text(text = stringResource(R.string.title)) },
@@ -56,7 +56,8 @@ fun TaskContent(
             onPrioritySelected = onPrioritySelected
         )
         OutlinedTextField(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             value = description,
             onValueChange = { onDescriptionChange(it) },
             label = { Text(text = stringResource(R.string.description)) },
